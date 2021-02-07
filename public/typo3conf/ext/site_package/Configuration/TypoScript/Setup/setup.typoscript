@@ -1,1 +1,17 @@
 <INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_package/Configuration/TypoScript/Plain/" extensions="typoscript">
+
+
+page.10.fields.footerMenu = JSON
+page.10.fields.footerMenu {
+    dataProcessing {
+        10 = FriendsOfTYPO3\Headless\DataProcessing\MenuProcessor
+        10 {
+            special = list
+            special.value = 4,2,23
+            expandAll = 1
+            includeSpacer = 1
+            titleField = nav_title // title
+            as = footerNavigation
+        }
+    }
+}

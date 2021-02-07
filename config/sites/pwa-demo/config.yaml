@@ -44,3 +44,44 @@ languages:
     enabled: true
 rootPageId: 1
 routes: {  }
+routeEnhancers:
+  NewsPlugin:
+    type: Extbase
+    limitToPages:
+      - 23
+      - 24
+      - 25
+    extension: News
+    plugin: Pi1
+    routes:
+      -
+        routePath: '/{news_title}'
+        _controller: 'News::detail'
+        _arguments:
+          news_title: news
+      -
+        routePath: '/strona-{page}'
+        _controller: 'News::list'
+        _arguments:
+          page: '@widget_0/currentPage'
+        requirements:
+          page: \d+
+      -
+        routePath: '/arch/{year}/{month}'
+        _controller: 'News::archive'
+    defaultController: 'News::list'
+    defaults:
+      page: '0'
+    aspects:
+      news_title:
+        type: PersistedAliasMapper
+        tableName: tx_news_domain_model_news
+        routeFieldName: path_segment
+      page:
+        type: StaticRangeMapper
+        start: '1'
+        end: '999'
+      category-name:
+        type: PersistedAliasMapper
+        tableName: sys_category
+        routeFieldName: slug
